@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"><title>Autores</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h2>Autores</h2>
+    
+      <%for (var author in authors) {%>
+	<h3><%= authors[author].name %></h3>
+      
+	<img src="<%= authors[author].urlphoto %>" alt="Imagen del autor" />
+	
+	<%if(authors[author].urlvideo) {%>
+	  <video controls>
+	    <source src="<%= authors[author].urlvideo %>">
+	    Tu buscador no soporta este tipo de vídeos
+	  </video>
+	<%}%>
+	<br>
+	<br>
+      <%}%>
+  </body>
+</html>

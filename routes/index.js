@@ -11,4 +11,8 @@ router.get('/', function(req, res) {
 router.get('/quizes/question', quizController.question);
 router.get('/quizes/answer', quizController.answer);
 
+router.get('/author', function(req, res) {
+    res.render('author', { authors: [{ name: 'Leire Roa', urlphoto: '/images/author.jpg', urlvideo: 'videos/30-SecondVideo.mp4' }, { name: 'Usuario Prueba', urlphoto: '/images/usuario.jpeg' }]});
+});
+
 module.exports = router;

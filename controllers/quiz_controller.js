@@ -114,3 +114,31 @@ exports.destroy = function(req, res) {
 	res.redirect('/quizes');
     }).catch( function(error) { next(error) });
 };
+
+// GET /quizes/statistics
+exports.statistics = function (req, res, next) {
+	models.Quiz.findAll({
+		include: [{ model: models.Comment }]
+	}).then(function (quizes) {
+		var estadisticas = {
+			nPreguntas: quizes.length,
+			nComentarios: 0,
+			comtsPorPregunta: 0,
+			nPreguntasNoComentadas: 0,
+			nPreguntasComentadas: 0
+		};
+		for (var i = 0; i < quizes.length; i++) {
+			var comments = quizes[i].Comments.length;
+			estadisticas.nComentarios += comments;
+			if (comments > 0) {
+				estadisticas.nPreguntasComentadas++;
+			} else {
+				estadisticas.nPreguntasNoComentadas++;
+			}
+		}
+		estadisticas.comPorPregunta = estadisticas.nComentarios / estadisticas.nPreguntas;
+		res.render('quizes/statistics', {estadisticas:estadisticas, errors:[]});
+	}).catch(function (err) {
+		next(err);
+	});
+};
